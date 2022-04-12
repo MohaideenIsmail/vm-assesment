@@ -1,0 +1,8 @@
+<ngb-accordion #acc="ngbAccordion" activeIds="config-panel-one">
+  <ngb-panel title="Cart items" id="config-panel-one">
+    <ng-template ngbPanelContent>
+        {{items | json}}
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>
+<br><br>
