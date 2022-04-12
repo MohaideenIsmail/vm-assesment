@@ -11,13 +11,22 @@
     <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col" sortable="name" (sort)="onSort($event)">Country</th>
-      <th scope="col" sortable="area" (sort)="onSort($event)">Area</th>
-      <th scope="col" sortable="population" (sort)="onSort($event)">Population</th>
+      <th scope="col" sortable="name" (sort)="onSort($event)">Country
+        <span class="sort-btn" *ngIf="sort.direction === 'desc' && sort.column === 'name'"><img src="/assets/up.png" ></span>
+        <span class="sort-btn" *ngIf="sort.direction === 'asc' && sort.column === 'name'"><img src="/assets/down.png" ></span>
+      </th>
+      <th scope="col" sortable="area" (sort)="onSort($event)">Area
+        <span class="sort-btn" *ngIf="sort.direction === 'desc' && sort.column === 'area'"><img src="/assets/up.png" ></span>
+        <span class="sort-btn" *ngIf="sort.direction === 'asc' && sort.column === 'area'"><img src="/assets/down.png" ></span>
+      </th>
+      <th scope="col" sortable="population" (sort)="onSort($event)">Population
+        <span class="sort-btn" *ngIf="sort.direction === 'desc' && sort.column === 'population'"><img src="/assets/up.png" ></span>
+        <span class="sort-btn" *ngIf="sort.direction === 'asc' && sort.column === 'population'"><img src="/assets/down.png" ></span>
+      </th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let country of countries$ as countries; let i = index" [selectable]="i" (select)="onSelect(countries[$event])" (deselect)="onDeselect($event)">
+    <tr *ngFor="let country of countries$ | async as countries; let i = index; trackBy: trackByFn" [selectable]="i" (click)="toggleSelection(country)" [class.highlight]="isCountrySelected(country)">
       <th scope="row">{{ country.name }}</th>
       <td>
         <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="me-2" style="width: 20px">

@@ -17,6 +17,8 @@ export class OrderComponent implements OnInit {
   @ViewChildren(NgbdSortableHeader)
   headers!: QueryList<NgbdSortableHeader>;
 
+  sort: {column: string, direction: string} = {column: '', direction: ''};
+
   constructor(public service: CartService) {
     this.countries$ = service.items$;
     this.total$ = service.total$;
@@ -32,16 +34,42 @@ export class OrderComponent implements OnInit {
         header.direction = '';
       }
     });
+    this.sort.column = column;
+    this.sort.direction = direction;
 
     this.service.sortColumn = column;
     this.service.sortDirection = direction;
   }
 
   onSelect(item: Item) {
+    console.log("onselect");
     this.service.selectedItems.push(item)
   }
 
   onDeselect(index: number) {
+    console.log("onDeselect");
     this.service.selectedItems.splice(index);
   }
+
+  /** Returns an item if country selected. */
+  isCountrySelected(country: Item) {
+    return this.service.selectedItems.find((item: Item) => item.id === country.id);
+  }
+
+  /** Track by for country list. */
+  trackByFn(index: number, item: Item) {
+    return item.id
+  }
+
+  /** Toggles the selecton. */
+  toggleSelection(country: Item) {
+    const selectedItems = this.service.selectedItems;
+    const itemIndex = this.service.selectedItems.findIndex((item: Item) => item.id === country.id);
+    if(itemIndex > -1) {
+      this.service.selectedItems.splice(itemIndex, 1);
+    } else {
+      this.service.selectedItems.push(country);
+    }
+  }
+
 }

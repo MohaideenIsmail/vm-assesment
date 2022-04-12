@@ -14,3 +14,19 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 ## Expectation
 We expect the application to look like the picture in `src/assets/expected.png`. (Keep in mind that triangles for sorting are missing from this picture, so we leave it up to you to decide for it's look & feel).
+
+
+# Solutions
+
+#1:
+async pipe is missed since we are using a observable data.
+
+#2:
+Added hghlight class to highlighting the selected row.
+
+#3
+Added a new method for toggle operation ( Actual issue is there is no no of item parameter in slice method ).
+Using single method of select/deselect, based on selected items is present or not, we can identify the select/deselect trigger.
+
+#4
+Added up/down to show sortable actions.
